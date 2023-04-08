@@ -35,23 +35,50 @@ class Deck:
 		for c in self.cards:
 			print(c)
 
-deck = Deck()
-deck.shuffle()
-
-print(deck)
 
 
-player_hands = [[] for _ in range(num_players)]
+class GameState:
+    
+	def __init__(self):
+            self.deck = Deck()
+            self.deck.shuffle()
 
-print(player_hands)
+            self.lives = 3
+            self.clues = 8
+
+            self.player_turn = 0
+
+            self.played_in_colors = { c : 0 for c in colors}
+            self.discard = set()
+
+            self.player_hands = [[] for _ in range(num_players)]
+
+            # deal hands
+
+            for p in range(num_players):
+                    for _ in range(4):
+                            self.player_hands[p].append(self.deck.draw())
+
+        def is_card_playable(card):
+            return self.played_in_color[card[0]] == card[1] - 1
+
+        def preform_move(self, move):
+            self.play_card(0, 0)
+
+        def play_card(self, player_id, card_position_in_hand):
+            card = self.player_hands[player_id].pop(card_position_in_hand)
+            
+            if self.is_card_playable(card):
+                self.played_in_colors[card[0]] += 1
+            else:
+                self.lives -= 1
+                self.dicard.append(card)
+                if self.lives <= 0:
+                    print("AAAAAHHHH, dead")
+                
 
 
-
-# deal hands
-
-for p in range(num_players):
-	for _ in range(4):
-		player_hands[p].append(deck.draw())
+                            
 
 
 
