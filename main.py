@@ -9,11 +9,11 @@ class TableInformation:
     
 	def __init__(self, ds, l, c, b, d):
 
-        self.deck_size = ds
-        self.lives = l
-        self.clues = c
-        self.board = b
-        self.discard = d
+        self.deck_size = ds # int : number of cards in the draw pile
+        self.lives = l 		# int : lives left
+        self.clues = c 		# int : clues left
+        self.board = b 		# dict(color -> int) : mapping colors to number of cards played in that color
+        self.discard = d 	# set(card) : discarded cards
 
 
 class Game:
@@ -58,7 +58,7 @@ class Game:
 		for p in range(num_players):
 
 			ti = TableInformation(len(game_state.deck.size()), game_state.lives, game_state.clues, dict(game_state.board), set(game_state.discard))
-			
+
 			players[p].update_log(ti, oppnent_hands_to_player(p), move, move_result)
 
 		return not move_result.is_game_end()
