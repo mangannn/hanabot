@@ -1,38 +1,9 @@
 
-
 import random
 
+from move import *
 
 colors = ['R', 'G', 'B', 'W', 'Y']
-
-
-class Deck:
-	
-	def __init__(self):
-		self.cards = []
-		for c in colors:
-			self.cards.append( (c, 1) )
-			self.cards.append( (c, 1) )
-			self.cards.append( (c, 1) )
-			self.cards.append( (c, 2) )
-			self.cards.append( (c, 2) )
-			self.cards.append( (c, 3) )
-			self.cards.append( (c, 3) )
-			self.cards.append( (c, 4) )
-			self.cards.append( (c, 4) )
-			self.cards.append( (c, 5) )
-
-	def draw(self):
-		return self.cards.pop() 
-
-	def shuffle(self):
-		random.shuffle(self.cards)
-
-	def print(self):
-		for c in self.cards:
-			print(c)
-
-
 
 class GameState:
     
@@ -54,14 +25,19 @@ class GameState:
             # deal hands
 
             for p in range(num_players):
-                    for _ in range(4):
-                            self.player_hands[p].append(self.deck.draw())
+                if (num_players == 2 or num_players == 3):
+                    num_cards = 5
+                else:
+                    numcards = 4
 
-        def is_card_playable(card):
-            return self.played_in_color[card[0]] == card[1] - 1
+                for _ in range(numcards):
+                        self.player_hands[p].append(self.deck.draw())
+
+        def is_card_playable(self, card):
+            return self.played_in_colors[card[0]] == card[1] - 1
 
         def preform_move(self, move):
-            self.play_card(0, 0)
+            if(move is Clue)
 
         def play_card(self, player_id, card_position_in_hand):
             card = self.player_hands[player_id].pop(card_position_in_hand)
@@ -73,4 +49,30 @@ class GameState:
                 self.dicard.append(card)
                 if self.lives <= 0:
                     print("AAAAAHHHH, dead")
-                
+
+
+
+class Deck:
+    def __init__(self):
+        self.cards = []
+        for c in colors:
+            self.cards.append((c, 1))
+            self.cards.append((c, 1))
+            self.cards.append((c, 1))
+            self.cards.append((c, 2))
+            self.cards.append((c, 2))
+            self.cards.append((c, 3))
+            self.cards.append((c, 3))
+            self.cards.append((c, 4))
+            self.cards.append((c, 4))
+            self.cards.append((c, 5))
+
+    def draw(self):
+        return self.cards.pop()
+
+    def shuffle(self):
+        random.shuffle(self.cards)
+
+    def print(self):
+        for c in self.cards:
+            print(c)
